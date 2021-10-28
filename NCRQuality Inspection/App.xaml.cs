@@ -13,5 +13,15 @@ namespace NCRQuality_Inspection
     /// </summary>
     public partial class App : Application
     {
+        private void Application_Startup(object sender, StartupEventArgs e)
+        {
+            //Debug
+            //MainWindow wnd = new MainWindow(e.Args);                    
+            //wnd.Show();
+
+
+            Login_Application wnd = new Login_Application();
+            wnd.Show();
+        }
     }
 }

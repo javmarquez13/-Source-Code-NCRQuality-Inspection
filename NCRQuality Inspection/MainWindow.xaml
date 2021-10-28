@@ -5,8 +5,337 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NCRQuality_Inspection"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
-        
+        Title="NCR Quality inspection" 
+        Height="724" Width="1081" 
+        ResizeMode="CanResizeWithGrip"
+        BorderThickness="0"
+        AllowsTransparency="True"
+        Background="WhiteSmoke"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        Topmost="False"
+        Loaded="Window_Loaded"
+        Closing="Window_Closing"
+    MouseDown="Window_MouseDown">
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <DoubleAnimation From="0" To="1" Duration="0:0:.25" Storyboard.TargetProperty="Opacity">
+
+                    </DoubleAnimation>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+
+    <Window.Resources>
+        <Style TargetType="{x:Type DataGridRow}">
+            <Setter Property="Foreground" Value ="Black"/>
+            <Setter Property="Height" Value="60"/>
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+        </Style>
+
+        <Style TargetType="{x:Type DataGridCell}">
+            <Setter Property="Foreground" Value ="Black"/>
+            <Setter Property="HorizontalAlignment" Value="Stretch" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+        </Style>
+    </Window.Resources>
+
+
+    <Grid x:Name="Grid1" SizeChanged="Grid_SizeChanged">
+        <Canvas x:Name="myCanvas" Margin="2,-1,0,1.667" Background="WhiteSmoke"  RenderTransformOrigin="0.573,0.507">
+            <DockPanel Height="40" Width="1083" 
+                LastChildFill="False" 
+                RenderTransformOrigin="0.5,0.5"
+                Background="#FF101D25" 
+                Canvas.Left="-4"
+                MouseDown="DockPanel_MouseDown">
+                <DockPanel.Effect>
+                    <BlurEffect/>
+                </DockPanel.Effect>
+                <DockPanel.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform ScaleY="-1"/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform/>
+                    </TransformGroup>
+                </DockPanel.RenderTransform>
+            </DockPanel>
+
+            <Label x:Name="lblVersion"
+                Content="NCR Quality Inspection V1.0.0.11"
+                VerticalContentAlignment="Center"
+                Width="403" Height="33" 
+                FontSize="14" 
+                Canvas.Left="8"
+                FontWeight="Bold" 
+                Foreground="WhiteSmoke" Canvas.Top="4" RenderTransformOrigin="0.5,0.5">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform AngleX="-2.936"/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-0.949"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+
+            <Button x:Name="btnExit"
+                Content="X" 
+                Height="33" Width="42"
+                VerticalAlignment="Top"  
+                Canvas.Left="1033" Canvas.Top="4" 
+                Background="#B71C1C" 
+                Foreground="White"
+                ClipToBounds="True" 
+                SnapsToDevicePixels="True"
+                Click="BtnExit_Click"
+                BorderThickness="0">
+                <Button.Effect>
+                    <DropShadowEffect Color="#FFEF5350"/>
+                </Button.Effect>
+            </Button>
+
+
+            <Button x:Name="btnMinimize"
+                Content="_" 
+                Height="33" Width="43"
+                VerticalAlignment="Top"  
+                Canvas.Left="989" Canvas.Top="4" 
+                Background="#FF101D25"
+                Foreground="White"
+                ClipToBounds="True" 
+                SnapsToDevicePixels="True"
+                Click="BtnMinimize_Click"
+                BorderThickness="0">
+                <Button.Effect>
+                    <DropShadowEffect Color="#FFEF5350"/>
+                </Button.Effect>
+            </Button>
+
+
+
+            <Label x:Name="lblInactiveTime"
+                Content="Inactive Time:"
+                VerticalContentAlignment="Center"
+                HorizontalContentAlignment="Center"
+                Width="99" FontSize="8" Height="20"
+                Canvas.Left="883" Canvas.Top="6" FontWeight="Normal" 
+                Foreground="#E0E0E0"/>
+
+            <!--SECCCION #1 UNIT INFO-->
+            <Border BorderBrush="Black" BorderThickness=".5" Canvas.Top="46" Canvas.Left="19" Width="804" Height="40">
+                <Grid Canvas.Left="31" Canvas.Top="71" ShowGridLines="False" Margin="1.333,0.333,0,-3.667" HorizontalAlignment="Left" Width="801">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="107*"></ColumnDefinition>
+                        <ColumnDefinition Width="175*"></ColumnDefinition>
+                        <ColumnDefinition Width="130*"></ColumnDefinition>
+                        <ColumnDefinition Width="153*"></ColumnDefinition>
+                        <ColumnDefinition Width="114*"></ColumnDefinition>
+                        <ColumnDefinition Width="121*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+                    <Label x:Name="lblScanTracerWip" Content="Escanea Unidad:" Grid.Row="0" Grid.Column="0" 
+                       HorizontalAlignment="Center" VerticalAlignment="Center"
+                       Foreground="Black" FontSize="12" FontWeight="Normal" Height="26" Margin="5,5,6.333,11.667" Width="96"/>
+
+                    <TextBox x:Name="txtBoxScan" Grid.Row="0"
+                       TextWrapping="Wrap" Height="28" Width="159" VerticalAlignment="Center" 
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       HorizontalAlignment="Center"  BorderThickness="1" BorderBrush="Black" 
+                       KeyDown="TxtBoxScan_KeyDown" Margin="9.667,5,6.667,9.667" Grid.Column="1"/>
+
+                    <Label Content="Ultima pieza:"
+                       Foreground="Black"
+                       VerticalAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       HorizontalAlignment="Center" Height="26" Margin="9.333,5,8.667,11.667" Width="112" Grid.Column="2"/>
+
+                    <Label x:Name="lblWip" Grid.Column="3"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Content="Wip:" 
+                       Foreground="Black" Height="26" Margin="4.333,5,5,11.667" Width="144" RenderTransformOrigin="5.806,-1.59"/>
+
+                    <Label x:Name="lblTracer"
+                       Content="Tracer:"
+                       Foreground="Black"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center" HorizontalAlignment="Center" Height="30" Margin="6,3,5,9.667" Width="103" Grid.Column="4"/>
+
+                    <Label x:Name="lblClass" Grid.Column="5"
+                       Content="Class:"
+                       Foreground="Black" 
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center" Width="112" Height="27" Margin="4,5,5.333,10.667"/>
+
+                </Grid>
+            </Border>
+
+            <!--SECCION #2 FEATURE EN INSPECCION-->
+            <Border BorderBrush="Black" BorderThickness=".5" Canvas.Top="94" Canvas.Left="4" Width="1070">
+                <Grid Height="159" Canvas.Left="37" Canvas.Top="220" ShowGridLines="False" Margin="0.333,0,-0.667,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="191*"></ColumnDefinition>
+                        <ColumnDefinition Width="259*"></ColumnDefinition>
+                        <ColumnDefinition Width="192*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="20*"></RowDefinition>
+                        <RowDefinition Height="50*"></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <!--<Rectangle Grid.Row="2" Grid.Column="0" Fill="AntiqueWhite" Margin="6,35,0,-0.333" Grid.RowSpan="2"/>
+                    <Rectangle Grid.Row="2" Grid.Column="1" Fill="AntiqueWhite" Height="50" Margin="0,35,0.333,-0.333" Grid.RowSpan="2" VerticalAlignment="Top"/>
+                    <Rectangle Grid.Row="2" Grid.Column="2" Fill="AntiqueWhite" Margin="0,35,7,-0.333" Grid.RowSpan="2"/>-->
+
+                    <Label x:Name="lblOnInspection" Content="EN INSPECCION:" Grid.Row="0" HorizontalAlignment="Center"           
+                   HorizontalContentAlignment="Center" VerticalContentAlignment="Top"
+                   FontWeight="Normal"
+                   FontSize="15" Margin="223,0,222,0.667" Width="625" Grid.ColumnSpan="3"/>
+
+                    <Label x:Name="lblFeatureUnderTest" Grid.Column="0"
+                       Background="WhiteSmoke"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Top"
+                       HorizontalContentAlignment="Center"
+                       VerticalContentAlignment="Top"
+                       Content="FEATURE UNDER TEST:" 
+                       FontSize="15" Margin="235,1.333,223,0" Grid.ColumnSpan="3" Width="612" Height="28" Grid.Row="1" Grid.RowSpan="2"/>
+
+                    <Label x:Name="lblDescription" Grid.Row="2"
+                       VerticalAlignment="Top"
+                       HorizontalAlignment="Center"
+                       VerticalContentAlignment="Top"
+                       HorizontalContentAlignment="Center"
+                       Background="WhiteSmoke"
+                       Content="FEATURE DESCRIPTION:" 
+                       FontSize="15" Margin="226,0.667,224,0" Grid.ColumnSpan="3" Width="620" Height="29" Grid.RowSpan="2" />
+
+                    <Label x:Name="lblInstruction" Grid.Row="3"
+                       Background="WhiteSmoke"
+                       FontWeight="Bold"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       VerticalContentAlignment="Center"
+                       HorizontalContentAlignment="Center"
+                       Foreground="Black"
+                       Content="INSTRUCTION: "                       
+                       FontSize="23" Grid.ColumnSpan="3" Margin="2,1.333,2,0.667" Width="1066" Height="70"/>
+                </Grid>
+            </Border>
+
+            <!--SECCION #3 IMAGENES DE REFERNECIA-->
+            <Border x:Name="BorderRefImages" CornerRadius="7" BorderBrush="Black" BorderThickness=".5" Canvas.Top="260" Canvas.Left="4" Height="462" Width="852">
+                <Grid x:Name="CanvasImages" Canvas.Left="42" Canvas.Top="389" ShowGridLines="False" Margin="5.333,3.333,5.333,5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="0*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"></RowDefinition>
+
+                    </Grid.RowDefinitions>
+
+                    <Image x:Name="ImgMain" Grid.Column="1"                      
+                      Stretch="Fill"
+                      AllowDrop="True"   
+                      MouseLeftButtonDown="ImgMain_MouseLeftButtonDown"
+                      MouseWheel="ImgMain_MouseWheel" MouseLeave="ImgMain_MouseLeave" Margin="4.333,1,-4.333,0.333"/>
+
+                    <MediaElement  x:Name="MediaElement" Grid.Column="0"
+                           Stretch="Fill"
+                           AllowDrop="True"
+                           DragDrop.Drop="MediaElement_Drop"
+                           LoadedBehavior="Manual" 
+                           MouseLeftButtonDown="MediaElement_MouseLeftButtonDown"
+                           MediaEnded="MediaElement_MediaEnded" 
+                           MouseWheel="MediaElement_MouseWheel" 
+                           MouseLeave="MediaElement_MouseLeave" Margin="0,2,3.667,2.333"/>
+                </Grid>
+            </Border>
+
+            <!--SECCION #4 INQUEUE FEATURES Y LOCALIDAD DE APLICACION-->
+            <Border BorderBrush="Black" BorderThickness="0" Canvas.Left="860" Canvas.Top="262" Width="215" Height="460">
+                <Grid Canvas.Left="671" Canvas.Top="91" ShowGridLines="False" Margin="0,0,1,1.333">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="105*"></ColumnDefinition>
+                        <ColumnDefinition Width="14*"></ColumnDefinition>
+                        <ColumnDefinition Width="105*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="28"></RowDefinition>
+                        <RowDefinition Height="3*"/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+
+
+                    <Label x:Name="lblInProgressFeature" Grid.Column="0"
+                           Content="EN PROCESO:" 
+                           VerticalAlignment="Center"
+                           HorizontalAlignment="Center"
+                           VerticalContentAlignment="Center"
+                           HorizontalContentAlignment="Center"                           
+                           FontSize="12" FontWeight="Normal" Foreground="Black" Height="25" Margin="8,2,10.333,1" Width="195" Grid.ColumnSpan="3" Grid.Row="0"/>
+
+
+                    <DataGrid x:Name="dgInQueue"  Grid.Row="1" Grid.ColumnSpan="3"                     
+                          RowBackground="GhostWhite"
+                          CanUserSortColumns="False" 
+                          MouseDoubleClick="DgInQueue_MouseDoubleClick"
+                          HorizontalScrollBarVisibility="Visible" VerticalScrollBarVisibility="Visible" 
+                          IsReadOnly="True" AreRowDetailsFrozen="True" FrozenColumnCount="2"
+                          CanUserReorderColumns="False" CanUserResizeColumns="False" GridLinesVisibility="None"
+                          LoadingRow="DgInQueue_LoadingRow" Margin="0,6,0.333,0.667"/>
+
+
+                    <Button x:Name="AnswerInspectYes" Grid.Row="2" Grid.Column="0"
+                           Content="SI (F1)" 
+                           BorderThickness="3" 
+                           BorderBrush="#8BC34A"
+                           Foreground="White"
+                           Click="AnswerInspectYes_Click" 
+                           Background="#8BC34A" Margin="0,4.333,11.667,-0.333" Grid.ColumnSpan="2"/>
+
+
+                    <Button Content="NO (F2)" x:Name="AnswerInspectNo" Grid.Row="2" Grid.Column="2"
+                        Click="AnswerInspectNo_Click"
+                        BorderThickness="3" 
+                        BorderBrush="#F44336"
+                        Foreground="WhiteSmoke"
+                        Background="#F44336" Grid.RowSpan="1" Margin="0,4.333,-0.667,-0.333" HorizontalAlignment="Right" Width="100"/>
+
+
+                </Grid>
+            </Border>
+            <Label x:Name="lblMode"
+                        Content="Mode:"
+                        FontWeight="Light"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Center"   
+                        Foreground="Black"                                          
+                        HorizontalContentAlignment="Right"
+                        VerticalContentAlignment="Top"
+                        FontSize="10"
+                        
+                        BorderThickness="0" Height="203" Width="236" Grid.ColumnSpan="3" Canvas.Top="48" Canvas.Left="837"/>
+
+        </Canvas>
     </Grid>
 </Window>
